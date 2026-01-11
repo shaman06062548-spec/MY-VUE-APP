@@ -1,65 +1,44 @@
-<template >
-    <div class= "container" >
-        <h1>Contact to kitsana srirupabut</h1>
-        <h3>tel 063-421-0629</h3>
-        <img alt="Vue logo" src="../assets/images.jpg">
-
- <img alt="Vue logo" src="../assets/images.jpg">
-
-
-
-
-  <div class="mb-3">
-    
-  <label for="exampleFormControlInput1" class="form-label">Email address</label>
-  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-</div>
-<div class="mb-3">
-  <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-</div>
+<template>
+  <div class="container mt-5">
+    <div class="text-start mb-4">
+      <h1 class="display-5 fw-bold">Contact to kitsana srirupabut</h1>
+      <h3 class="text-muted">Tel.063-421-0629</h3>
     </div>
-    <button type="button" class="btn btn-primary">sumit</button>
-    <button type="button" class="btn btn-danger">cancel</button>
 
+    <div class="row">
+      <div class="col-md-6 text-start">
+        <img src="../assets/images.jpg" class="img-fluid rounded mb-4 shadow-sm" alt="Cat Image" style="width: 30%;">
+        <br>
+        <img src="../assets/images.jpg" class="img-fluid rounded shadow-sm" alt="Beach Image" style="width: 30%;">
+      </div>
 
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <div class="mb-3 text-start">
+          <label for="emailInput" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+        </div>
+        
+        <div class="mb-3 text-start">
+          <label for="detailTextarea" class="form-label">Detail</label>
+          <textarea class="form-control" id="detailTextarea" rows="4"></textarea>
+        </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
+        <div class="text-end mt-3">
+          <button type="button" class="btn btn-primary me-2 px-4">Submit</button>
+          <button type="button" class="btn btn-danger px-4">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-    h1{
-        color: aquamarine;
-    }
-    
 
+h1 {
+  color: #333;
+}
+
+.form-label {
+  font-weight: 500;
+}
 </style>
