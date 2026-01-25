@@ -1,29 +1,31 @@
 <template>
   <div class="container mt-4">
-    <h2 class="mb-3">รายชื่อลูกค้า</h2>
-<div class="mb-3">
-    <a class="btn btn-primary" href="/add_customer" role="button">Add+</a>
+    <h2 class="mb-3">ข้อมูลพนักงาน</h2>
+    <div class="mb-3">
+    <a class="btn btn-primary" href="/add_employee" role="button">Add+</a>
 </div>
+    
     <!-- ตารางแสดงข้อมูลลูกค้า -->
     <table class="table table-bordered table-striped">
       <thead class="table-dark">
         <tr>
-          <th>ลำดับที่</th>
-          <th>รหัสลูกค้า</th>
+          <th>รหัสพนักงาน</th>
           <th>ชื่อ</th>
-          <th>นามสกุล</th>
-          <th>เบอร์โทร</th>
-          <th>ชื่อผู้ใช้</th>
+          <th>แผนก</th>
+          <th>เงินเดือน</th>
+          <th>active</th>
+          <th>created_at</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(customer,index) in customers" :key="customer.customer_id">
-          <td>{{ index + 1 }}</td>   <!--แสดงลำดับที่-->
-          <td>{{ customer.customer_id }}</td>
-          <td>{{ customer.firstName }}</td>
-          <td>{{ customer.lastName }}</td>
-          <td>{{ customer.phone }}</td>
-          <td>{{ customer.username }}</td>
+        <tr v-for="employee in employees" :key="employee.emp_id">
+          
+          <td>{{ employee.emp_id }}</td>
+          <td>{{ employee.full_name }}</td>
+          <td>{{ employee.department }}</td>
+          <td>{{ employee.salary }}</td>
+          <td>{{ employee.active }}</td>
+          <td>{{ employee.created_at }}</td>
         </tr>
       </tbody>
     </table>
@@ -44,20 +46,20 @@
 import { ref, onMounted } from "vue";
 
 export default {
-  name: "CustomerList",
+  name: "employeeList",
   setup() {
-    const customers = ref([]);
+    const employees = ref([]);
     const loading = ref(true);
     const error = ref(null);
 
     // ฟังก์ชันดึงข้อมูลจาก API
-    const fetchCustomers = async () => {
+    const fetchemployees = async () => {
       try {
-        const response = await fetch("http://localhost/MY-VUE-APP/php_api/show_customer.php");
+        const response = await fetch("http://127.168.72.1/MY-VUE-APP/php_api/show_employees.php");
         if (!response.ok) {
           throw new Error("ไม่สามารถดึงข้อมูลได้");
         }
-        customers.value = await response.json();
+        employees.value = await response.json();
       } catch (err) {
         error.value = err.message;
       } finally {
@@ -66,11 +68,11 @@ export default {
     };
 
     onMounted(() => {
-      fetchCustomers();
+      fetchemployees();
     });
 
     return {
-      customers,
+      employees,
       loading,
       error
     };

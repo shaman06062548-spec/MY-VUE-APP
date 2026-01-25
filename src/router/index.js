@@ -23,7 +23,13 @@ const routes = [
     path: '/employees',
     name: 'employees',
    
-    component: () => import('../views/employees.vue')
+    component: () => import('../views/employee.vue')
+  },
+  {
+    path: '/Add_customer',
+    name: 'Add_customer',
+   
+    component: () => import('../views/Add_customer.vue')
   },
 
   {
@@ -31,7 +37,32 @@ const routes = [
     name: 'contact',
    
     component: () => import('../views/Contact.vue')
+  },
+  {
+    path: '/add_employee',
+    name: 'add_employee',
+   
+    component: () => import('../views/add_employee.vue')
+  },
+   {
+    path: '/product',
+    name: 'product',
+   
+    component: () => import('../views/Product.vue')
+  },
+{
+    path: '/product_api',
+    name: 'product_api',
+   
+    component: () => import('../views/product_api.vue')
+  },
+{
+    path: '/show_product',
+    name: 'show_product',
+   
+    component: () => import('../views/show_product.vue')
   }
+
 
 
 ]
