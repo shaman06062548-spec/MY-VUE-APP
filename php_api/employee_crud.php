@@ -59,7 +59,7 @@ try {
 
         $emp_id = intval($data["emp_id"]);
 
-            $sql = "UPDATE employees 
+            $sql = "UPDATE employee
                     SET full_name = :full_name, 
                         department = :department, 
                         salary = :salary, 
@@ -89,7 +89,7 @@ try {
             exit;
         }
 
-        $stmt = $conn->prepare("DELETE FROM employees WHERE emp_id = :id");
+        $stmt = $conn->prepare("DELETE FROM employee WHERE emp_id = :id");
         $stmt->bindParam(":id", $data["emp_id"], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
