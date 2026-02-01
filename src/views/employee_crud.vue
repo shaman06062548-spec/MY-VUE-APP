@@ -25,9 +25,9 @@
               แก้ไข
             </button>
             |
-            <button class="btn btn-danger btn-sm" @click="deletetype(type.type_id)">
+            <button class="btn btn-danger btn-sm" @click="deleteType(type.type_id)">
               ลบ
-            </button> 
+            </button>
           </td>
         </tr>
       </tbody>
@@ -47,7 +47,7 @@
             <form @submit.prevent="saveType">
               <div class="mb-3">
                 <label class="form-label">ชื่อประเภทสินค้า</label>
-                <input v-model="editType.type_name" type="text" class="form-control" required>
+                <input v-model="editData.type_name" type="text" class="form-control" required>
               </div>
               <button type="submit" class="btn btn-success">
                 {{ isEditMode ? "บันทึกการแก้ไข" : "เพิ่มข้อมูล" }}
@@ -57,6 +57,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -69,13 +70,13 @@ export default {
     const types = ref([]);
     const loading = ref(true);
     const error = ref(null);
-
-    // ✅ เพิ่มตัวแปรจัดการ Modal และสถานะการแก้ไข
-    const editType = ref({ type_name: "" });
+    
+    // สถานะสำหรับ Modal
+    const editData = ref({ type_name: "" });
     const isEditMode = ref(false);
     let typeModal = null;
 
-    const fetchtypes = async () => {
+    const fetchTypes = async () => {
       try {
         const response = await fetch("http://127.168.72.1/MY-VUE-APP/php_api/show_type.php");
         if (!response.ok) throw new Error("ไม่สามารถดึงข้อมูลได้");
@@ -88,43 +89,42 @@ export default {
     };
 
     onMounted(() => {
-      fetchtypes();
-      // ✅ ผูกตัวแปรกับ Modal (ต้องมี id="typeModal" ใน template)
+      fetchTypes();
+      // สร้าง instance ของ Bootstrap Modal
       const modalEl = document.getElementById("typeModal");
-      if (modalEl) {
-        typeModal = new window.bootstrap.Modal(modalEl);
-      }
+      typeModal = new window.bootstrap.Modal(modalEl);
     });
 
-    // ✅ ฟังก์ชันเปิด Modal เพิ่มข้อมูล
+    // ✅ เปิด Modal เพิ่มข้อมูล
     const openAddModal = () => {
       isEditMode.value = false;
-      editType.value = { type_name: "" };
-      typeModal.show(); // แก้ Error 'show' of null โดยการมี HTML Modal รองรับ
-    };
-
-    // ✅ ฟังก์ชันเปิด Modal แก้ไข (แก้ Error: openEditModal is not a function)
-    const openEditModal = (type) => {
-      isEditMode.value = true;
-      editType.value = { ...type }; // Copy ข้อมูล
+      editData.value = { type_name: "" };
       typeModal.show();
     };
 
-    // ✅ ฟังก์ชันบันทึกข้อมูล
+    // ✅ เปิด Modal แก้ไข
+    const openEditModal = (type) => {
+      isEditMode.value = true;
+      editData.value = { ...type }; // คัดลอกข้อมูลใส่ Modal
+      typeModal.show();
+    };
+
+    // ✅ ฟังก์ชันบันทึก (POST / PUT)
+    // หมายเหตุ: คุณต้องเตรียมไฟล์ PHP ให้รองรับการทำงานนี้เหมือน employee_crud.php
     const saveType = async () => {
-      const url = "http://127.168.72.1/MY-VUE-APP/php_api/type_crud.php";
+      const url = "http://127.168.72.1/MY-VUE-APP/php_api/type_crud.php"; // เปลี่ยนเป็นไฟล์ CRUD ของคุณ
       const method = isEditMode.value ? "PUT" : "POST";
 
       try {
         const response = await fetch(url, {
           method,
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(editType.value)
+          body: JSON.stringify(editData.value)
         });
         const result = await response.json();
         if (result.success) {
           alert(result.message);
-          fetchtypes(); // โหลดข้อมูลใหม่
+          fetchTypes();
           typeModal.hide();
         } else {
           alert(result.message);
@@ -134,8 +134,8 @@ export default {
       }
     };
 
-    // ✅ ฟังก์ชันลบข้อมูล (แก้ Error: deletetype is not a function)
-    const deletetype = async (id) => {
+    // ✅ ฟังก์ชันลบ
+    const deleteType = async (id) => {
       if (!confirm("คุณต้องการลบข้อมูลนี้ใช่หรือไม่?")) return;
       try {
         const response = await fetch("http://127.168.72.1/MY-VUE-APP/php_api/type_crud.php", {
@@ -156,9 +156,15 @@ export default {
     };
 
     return {
-      types, loading, error,
-      editType, isEditMode,
-      openAddModal, openEditModal, saveType, deletetype // ✅ ต้องส่งค่าออกไปให้ Template ใช้งาน
+      types,
+      loading,
+      error,
+      editData,
+      isEditMode,
+      openAddModal,
+      openEditModal,
+      saveType,
+      deleteType
     };
   }
 };

@@ -22,6 +22,12 @@
           <a class="nav-link" href="/contact">contact</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="/Customer_crud">Customer_crud</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="/employee_crud">employee_crud</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/employees">employees</a>
         </li>
         <li class="nav-item dropdown">
