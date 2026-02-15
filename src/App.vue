@@ -27,16 +27,40 @@
          <li class="nav-item">
           <a class="nav-link" href="/employee_crud">employee_crud</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/employees">employees</a>
-        </li>
+     
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="/about" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Link
+            employees
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item"  href="/employees">employees </a></li>
+            <li><a class="dropdown-item" href="/employee_crud">employee_crud</a></li>
+            <li><a class="dropdown-item" href="/employee_crud_image">employee_crud_image
+            </a></li>
+            <li><hr class="dropdown-divider"></li>
+          </ul>
+        </li>
+
+
+
+
+
+
+
+
+
+
+
+        <ul class="dropdown-menu"></ul>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/about" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            product
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/product">product</a></li>
             <li><a class="dropdown-item" href="/product_api">product_api</a></li>
+            <li><a class="dropdown-item" href="/product_edit">product_edit</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="/show_product">show_product</a></li>
           </ul>

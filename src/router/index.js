@@ -72,7 +72,18 @@ const routes = [
   path: '/employee_crud',
   name: 'Employee_crud',
   component: () => import('../views/employee_crud.vue') // แก้เป็น e ตัวเล็กให้ตรงกับชื่อไฟล์จริง
+},
+{
+  path: '/product_edit',
+  name: 'product_edit',
+  component: () => import('../views/product_edit.vue')
+},
+{
+  path: '/employee_crud_image',
+  name: 'employee_crud_image',
+  component: () => import('../views/employee_crud_image.vue')
 }
+
 
 
 
