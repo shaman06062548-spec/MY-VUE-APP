@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2026 at 12:25 PM
+-- Generation Time: Feb 22, 2026 at 01:22 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_shop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `category_id` int(11) NOT NULL,
+  `category_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `category_name`) VALUES
+(1, 'เครื่องใช้ไฟฟ้า'),
+(2, 'เสื้อผ้า'),
+(3, 'รองเท้า');
 
 -- --------------------------------------------------------
 
@@ -45,7 +65,8 @@ INSERT INTO `customers` (`customer_id`, `firstName`, `lastName`, `phone`, `usern
 (00000003, 'John', 'Doe', '0991122334', 'johnd', 'securepwd'),
 (00000004, 'เมษา', 'เด็กดี', '038743690', 'mesa', '$2y$10$tSSl6/EruDffk'),
 (00000005, 'มานะ', 'มีใจ', '038754920', 'mana', '$2y$10$tA0rn9nxLE.i6q5U5qvgMuij0eJZJkNEQMTRn3lJsDECEt1jSq58u'),
-(00000006, 'ชูใจ', 'เด็กดี', '038743690', 'shoojai', '$2y$10$9JiaB6GjUeHH1pWQlsYpyebE7FVT8zZgINfMV2Ud16XKRlPGCtW5m');
+(00000006, 'ชูใจ', 'เด็กดี', '038743690', 'shoojai', '$2y$10$9JiaB6GjUeHH1pWQlsYpyebE7FVT8zZgINfMV2Ud16XKRlPGCtW5m'),
+(00000007, 'กฤษณะ', 'ศรีลุปะบาต', '0634210629', 'Kaiser_impact', '$2y$10$PdCNk24Lf0oZW2OD9VCV..7VwlenEpS4KjvK0c0V1SHP9QiTNpxCq');
 
 -- --------------------------------------------------------
 
@@ -71,10 +92,7 @@ INSERT INTO `employee` (`emp_id`, `full_name`, `department`, `salary`, `active`,
 (0000000001, 'สมชาย คนดี', 'การตลาด', '25000.00', 1, '', '2026-01-18 10:27:14'),
 (0000000002, 'สมหญิง ดีงาม', 'บัญชี', '28000.00', 1, '', '2026-01-18 10:27:14'),
 (0000000003, 'อนันต์ สุขใจ', 'การตลาด', '25000.00', 0, '', '2026-01-18 10:27:14'),
-(0000000004, 'สุดา พรมดี', 'ทรัพยากรบุคคล', '32000.00', 1, '', '2026-01-18 10:27:14'),
-(0000000005, 'นวรัตน์  เกิดผล', 'คอมพิวเตอร์', '25000.00', 1, '1771152837_577280151-1.jpg', '2026-01-25 09:43:49'),
-(0000002155, 'sda', 'das', '125.00', 0, '1771154188_577280151-1.jpg', '2026-02-15 11:16:28'),
-(0000002156, 'dsa', '16525', '23256.00', 0, '1771154464_577280151-1.jpg', '2026-02-15 11:21:04');
+(0000000004, 'สุดา พรมดี', 'ทรัพยากรบุคคล', '32000.00', 1, '', '2026-01-18 10:27:14');
 
 -- --------------------------------------------------------
 
@@ -89,6 +107,7 @@ CREATE TABLE `products` (
   `price` decimal(10,2) NOT NULL,
   `image` text DEFAULT NULL,
   `stock` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -96,16 +115,9 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `product_name`, `description`, `price`, `image`, `stock`, `created_at`) VALUES
-(00000000001, 'เสื้อยืดคอกลม', 'เสื้อยืดผ้าฝ้าย 100% สวมใส่สบาย', '199.00', 'p1.jpg', 50, '2026-01-25 10:42:55'),
-(00000000002, 'กางเกงยีนส์', 'กางเกงยีนส์ทรงกระบอก สีฟ้าอ่อน', '799.00', 'p2.jpg', 30, '2026-01-25 10:42:55'),
-(00000000003, 'รองเท้าผ้าใบ', 'รองเท้าผ้าใบสีขาว ใส่ได้ทุกโอกาส', '1299.00', 'p3.jpg', 20, '2026-01-25 10:42:55'),
-(00000000004, 'พ่อหนุ่ม', 'ชายแท้', '999999.00', '1771145327_577280151-1.jpg', 1, '2026-02-15 08:48:47'),
-(00000000005, 'หฟ', 'ฟก', '123.00', '1771147982_577280151-1.jpg', 2, '2026-02-15 09:33:02'),
-(00000000006, '01', '00', '989.00', '1771148031_577280151-1.jpg', 1, '2026-02-15 09:33:51'),
-(00000000007, '14', '25', '22.00', '1771148129_577280151-1.jpg', 1, '2026-02-15 09:35:29'),
-(00000000008, '25', '15', '1.00', '1771149786_577280151-1.jpg', 1, '2026-02-15 10:03:06'),
-(00000000009, 'dsa', 'ds', '12.00', '1771149819_577280151-1.jpg', 12, '2026-02-15 10:03:39');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `price`, `image`, `stock`, `category_id`, `created_at`) VALUES
+(00000000005, 'หฟ', 'ฟก', '123.00', '1771762353_3.jpg', 2, 3, '2026-02-15 09:33:02'),
+(00000000006, '01', '00', '989.00', '1771762342_2.jpg', 1, 2, '2026-02-15 09:33:51');
 
 -- --------------------------------------------------------
 
@@ -129,6 +141,12 @@ INSERT INTO `tb_type` (`type_id`, `type_name`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`category_id`);
 
 --
 -- Indexes for table `customers`
@@ -159,10 +177,16 @@ ALTER TABLE `tb_type`
 --
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `customer_id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employee`
