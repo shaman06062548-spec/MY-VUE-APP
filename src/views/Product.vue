@@ -29,7 +29,7 @@
             <td>{{ data.stock }}</td>
            <td>
           <img
-              :src="'http://localhost/MY-VUE-APP/php_api/image/' + data.image"
+              :src="'http://localhost/MY-VUE-APP/php_api/uploads/' + data.image"
               width="150"
               height="150" >
             </td>

@@ -42,7 +42,8 @@ const routes = [
     path: '/add_employee',
     name: 'add_employee',
    
-    component: () => import('../views/add_employee.vue')
+    component: () => import('../views/add_employee.vue'),
+    meta: { requiresAuth: true }   // ✅ บังคับ login
   },
    {
     path: '/product',
@@ -66,23 +67,50 @@ const routes = [
     path: '/Customer_crud',
     name: 'Customer_crud',
    
-    component: () => import('../views/Customer_crud.vue')
+    component: () => import('../views/Customer_crud.vue'),
+    meta: { requiresAuth: true }   // ✅ บังคับ login
   },
   {
   path: '/employee_crud',
   name: 'Employee_crud',
-  component: () => import('../views/employee_crud.vue') // แก้เป็น e ตัวเล็กให้ตรงกับชื่อไฟล์จริง
+  component: () => import('../views/employee_crud.vue'),
+  meta: { requiresAuth: true }   // ✅ บังคับ login 
 },
 {
   path: '/product_edit',
   name: 'product_edit',
-  component: () => import('../views/product_edit.vue')
+  component: () => import('../views/product_edit.vue'),
+  meta: { requiresAuth: true }   // ✅ บังคับ login
 },
 {
   path: '/employee_crud_image',
   name: 'employee_crud_image',
-  component: () => import('../views/employee_crud_image.vue')
+  component: () => import('../views/employee_crud_image.vue'),
+  meta: { requiresAuth: true }   // ✅ บังคับ login
+},
+{
+  path: '/login',
+  name: 'login',
+  component: () => import('../views/login.vue'),
+
+},
+
+/* ✅ Product Detail (รองรับ 2 แบบ) */
+
+// แบบ params (แนะนำ)
+{
+  path: '/ProductDetail/:id',
+  name: 'ProductDetail',
+  component: () => import('../views/ProductDetail.vue')
+},
+
+// แบบ query string (สำรอง)
+{
+  path: '/ProductDetail',
+  component: () => import('../views/ProductDetail.vue')
 }
+
+
 
 
 
@@ -95,4 +123,21 @@ const router = createRouter({
   routes
 })
 
+/* ✅ ROUTE GUARD */
+router.beforeEach((to, from, next) => {
+
+  const isLoggedIn = localStorage.getItem("adminLogin")
+
+  // ถ้าหน้านั้นต้อง login แต่ยังไม่ login
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next('/login')
+  } 
+  // ถ้า login แล้วแต่พยายามเข้าหน้า login
+  else if (to.path === '/login' && isLoggedIn) {
+    next('/')   // หรือ dashboard
+  }
+  else {
+    next()
+  }
+})
 export default router
